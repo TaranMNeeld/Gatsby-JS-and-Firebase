@@ -14,6 +14,7 @@ export const query = graphql`
             id
             name
           }
+          id
           title
           summary
         }
@@ -26,8 +27,20 @@ const IndexPage = (props) => {
   console.log(props)
   return (
     <Layout>
-
-  </Layout>
+        {props.data.allBook.edges.map(edge => {
+          return (<div key={edge.node.id}>
+            <h2>
+              {edge.node.title} - <small>{edge.node.author.name}</small>
+            </h2>
+            <div>
+              {edge.node.summary}
+            </div>
+            <Link to={`/book/${edge.node.id}`}>
+              Join conversation!
+            </Link>
+          </div>)
+        })}
+    </Layout>
   )
 }
 
