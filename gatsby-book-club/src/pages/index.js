@@ -4,6 +4,24 @@ import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
+import BookItem from '../components/BookItem'
+import styled from 'styled-components'
+
+const LinkButton = styled.div`
+  text-align: right;
+
+  a {
+    padding: 8px;
+    background: rebeccapurple;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+
+    &:hover {
+      background: indigo;
+    }
+  }
+`
 
 export const query = graphql`
   query MyQuery {
@@ -27,19 +45,19 @@ const IndexPage = (props) => {
   console.log(props)
   return (
     <Layout>
-        {props.data.allBook.edges.map(edge => {
-          return (<div key={edge.node.id}>
-            <h2>
-              {edge.node.title} - <small>{edge.node.author.name}</small>
-            </h2>
-            <div>
-              {edge.node.summary}
-            </div>
+      {props.data.allBook.edges.map(edge => {
+        return (<BookItem
+          authorName={edge.node.author.name}
+          bookSummary={edge.node.summary}
+          bookTitle={edge.node.title}
+          key={edge.node.id}>
+          <LinkButton>
             <Link to={`/book/${edge.node.id}`}>
-              Join conversation!
+              Join conversation
             </Link>
-          </div>)
-        })}
+          </LinkButton>
+        </BookItem>)
+      })}
     </Layout>
   )
 }
