@@ -39,6 +39,7 @@ module.exports = {
             map: doc => ({
               title: doc.title,
               summary: doc.summary,
+              imageURL: doc.imageURL,
               author___NODE: doc.author.id,
             }),
           },
@@ -50,6 +51,13 @@ module.exports = {
             }),
           },
         ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-remote-images`,
+      options: {
+        nodeType: 'Book',
+        imagePath: 'imageURL',
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
