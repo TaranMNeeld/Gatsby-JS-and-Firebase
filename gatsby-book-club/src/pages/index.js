@@ -35,6 +35,7 @@ export const query = graphql`
           id
           title
           summary
+          imageURL
         }
       }
     }
@@ -50,6 +51,7 @@ const IndexPage = (props) => {
           authorName={edge.node.author.name}
           bookSummary={edge.node.summary}
           bookTitle={edge.node.title}
+          bookCover={edge.node.imageURL}
           key={edge.node.id}>
           <LinkButton>
             <Link to={`/book/${edge.node.id}`}>
