@@ -35,7 +35,13 @@ export const query = graphql`
           id
           title
           summary
-          imageURL
+          localImage {
+            childImageSharp {
+              fixed(width: 200) {
+                ...GatsbyImageSharpFixed
+              }
+            }
+          }
         }
       }
     }
@@ -43,7 +49,6 @@ export const query = graphql`
 `
 
 const IndexPage = (props) => {
-  console.log(props)
   return (
     <Layout>
       {props.data.allBook.edges.map(edge => {
@@ -51,7 +56,7 @@ const IndexPage = (props) => {
           authorName={edge.node.author.name}
           bookSummary={edge.node.summary}
           bookTitle={edge.node.title}
-          bookCover={edge.node.imageURL}
+          bookCover={edge.node.localImage.childImageSharp.fixed}
           key={edge.node.id}>
           <LinkButton>
             <Link to={`/book/${edge.node.id}`}>
