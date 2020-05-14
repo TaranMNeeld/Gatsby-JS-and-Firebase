@@ -19,20 +19,11 @@ exports.createPages = ({ graphql, actions }) => {
     return graphql(`
         query MyQuery {
             allBook {
-            edges {
-                node {
-                author {
-                    id
-                    name
+                edges {
+                    node {
+                        id
+                    }
                 }
-                id
-                title
-                summary
-                localImage {
-                    publicURL
-                  }
-                }
-            }
             }
         }
     `)
@@ -44,7 +35,7 @@ exports.createPages = ({ graphql, actions }) => {
             createPage({
                 path: `/book/${book.node.id}`,
                 component: bookTemplate,
-                context: book.node
+                context: {bookId: book.node.id}
             })
         })
     })
