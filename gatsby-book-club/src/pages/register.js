@@ -4,21 +4,21 @@ import {FirebaseContext} from '../components/Firebase'
 
 import SEO from "../components/seo"
 
-const Login = () => {
+const Register = () => {
 
     const [credentials, setCredentials] = useState({
         email: '',
-        password: ''
+        password: '',
+        confirm: ''
     })
 
     const {firebase, loading} = useContext(FirebaseContext)
 
     const handleSubmit = e => {
         e.preventDefault()
-        if (!loading) {
-            firebase.login(credentials)
+        if (credentials.password === credentials.confirm) {
+            firebase.register(credentials)
         }
-        
     }
 
     const handleChange = e => {
@@ -30,7 +30,6 @@ const Login = () => {
     }
 
     return (
-        <section>
             <form onSubmit={handleSubmit}>
                 <input 
                     value={credentials.email} 
@@ -38,6 +37,7 @@ const Login = () => {
                     placeholder='email' 
                     type='email' 
                     onChange={handleChange}
+                    required
                 />
                 <input 
                     value={credentials.password} 
@@ -45,12 +45,21 @@ const Login = () => {
                     placeholder='password' 
                     type='password'  
                     onChange={handleChange}
+                    required
+                    minLength={8}
                 />
-                <button type='submit'>Login</button>
+                <input 
+                    value={credentials.confirm} 
+                    name='confirm' 
+                    placeholder='confirm password' 
+                    type='password'  
+                    onChange={handleChange}
+                    required
+                />
+                <button type='submit'>Register</button>
             </form>
-        </section>
     )
 
 }
 
-export default Login
+export default Register
