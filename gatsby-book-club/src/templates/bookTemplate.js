@@ -26,14 +26,14 @@ export const query = graphql`
 
 const BookTemplate = (props) => {
     return (
-        <Layout>
+        <section>
             <BookItem
                 authorName={props.data.book.author.name}
                 bookSummary={props.data.book.summary}
                 bookTitle={props.data.book.title}
                 bookCover={props.data.book.localImage.childImageSharp.fixed}
             />
-        </Layout>
+        </section>
     )
 }
 

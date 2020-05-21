@@ -13,22 +13,22 @@ const LogoutLink = styled.span`
     text-decoration: underline;
   }
 `
+const HeaderWrapper = styled.header`
+  background: rebeccapurple;
+  margin-bottom: 1.45rem;
+`
 
 const Header = ({ siteTitle }) => {
 
   const { firebase, user } = useContext(FirebaseContext)
 
   const handleLogout = () => {
+    localStorage.clear()
     firebase.logout().then(() => navigate('/login'))
   }
 
   return (
-    <header
-      style={{
-        background: `rebeccapurple`,
-        marginBottom: `1.45rem`,
-      }}
-    >
+    <HeaderWrapper>
       <div
         style={{
           margin: `0 auto`,
@@ -37,7 +37,7 @@ const Header = ({ siteTitle }) => {
           display: 'flex'
         }}
       >
-        <h1 style={{ margin: 0 }}>
+        <h1 style={{ margin: 0, flexGrow: 1 }}>
           <Link
             to="/"
             style={{
@@ -48,27 +48,33 @@ const Header = ({ siteTitle }) => {
             {siteTitle}
           </Link>
         </h1>
-        <div>
+        <div style={{ margin: 'auto 0' }}>
           {user && user.email &&
             <div>
               <div>
                 Hello, {user.email}
-              </div>
-              <LogoutLink onClick={handleLogout}>
-                Logout
+                <div style={{ textAlign: 'right' }}>
+                  <LogoutLink onClick={handleLogout}>
+                    Logout
               </LogoutLink>
+                </div>
+              </div>
             </div>
           }
-          {!user || !user.email && 
+          {!user &&
             <div>
-              <Link to='/login'>
+              <Link to='/login' style={{color: 'white', textDecoration: 'none'}}>
                 Login
+              </Link>
+              |
+              <Link to='/register' style={{color: 'white', textDecoration: 'none'}}>
+                Register
               </Link>
             </div>
           }
         </div>
       </div>
-    </header>
+    </HeaderWrapper>
   )
 }
 

@@ -50,7 +50,7 @@ export const query = graphql`
 
 const IndexPage = (props) => {
   return (
-    <Layout>
+    <section>
       {props.data.allBook.edges.map(edge => {
         return (<BookItem
           authorName={edge.node.author.name}
@@ -65,7 +65,7 @@ const IndexPage = (props) => {
           </LinkButton>
         </BookItem>)
       })}
-    </Layout>
+    </section>
   )
 }
 
