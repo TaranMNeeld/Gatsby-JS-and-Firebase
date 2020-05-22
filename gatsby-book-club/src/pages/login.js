@@ -11,18 +11,23 @@ const Login = () => {
         password: ''
     })
 
+    const [errorMsg, setErrorMsg] = useState('')
+
     const {firebase, loading} = useContext(FirebaseContext)
 
     const handleSubmit = e => {
         e.preventDefault()
         if (!loading) {
-            firebase.login(credentials)
+            firebase.login(credentials).catch(error => {
+                setErrorMsg(error.message)
+            })
         }
         
     }
 
     const handleChange = e => {
         e.persist()
+        setErrorMsg('')
         setCredentials({
             ...credentials,
             [e.target.name]: e.target.value
@@ -38,6 +43,7 @@ const Login = () => {
                     placeholder='email' 
                     type='email' 
                     onChange={handleChange}
+                    required
                 />
                 <input 
                     value={credentials.password} 
@@ -45,7 +51,11 @@ const Login = () => {
                     placeholder='password' 
                     type='password'  
                     onChange={handleChange}
+                    required
                 />
+                {!!errorMsg &&
+                    <p>{errorMsg}</p>
+                }
                 <button type='submit'>Login</button>
             </form>
         </section>

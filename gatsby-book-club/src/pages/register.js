@@ -14,15 +14,22 @@ const Register = () => {
 
     const {firebase, loading} = useContext(FirebaseContext)
 
+    const [errorMsg, setErrorMsg] = useState('')
+
     const handleSubmit = e => {
         e.preventDefault()
         if (credentials.password === credentials.confirm) {
-            firebase.register(credentials)
+            firebase.register(credentials).catch(error => {
+                setErrorMsg(error.message)
+            })
+        } else {
+            setErrorMsg('Passwords must match')
         }
     }
 
     const handleChange = e => {
         e.persist()
+        setErrorMsg('')
         setCredentials({
             ...credentials,
             [e.target.name]: e.target.value
@@ -56,6 +63,9 @@ const Register = () => {
                     onChange={handleChange}
                     required
                 />
+                {!!errorMsg &&
+                    <p>{errorMsg}</p>
+                }
                 <button type='submit'>Register</button>
             </form>
     )
