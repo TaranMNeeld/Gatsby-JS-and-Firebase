@@ -7,6 +7,7 @@ import SEO from "../components/seo"
 const Register = () => {
 
     const [credentials, setCredentials] = useState({
+        username: '',
         email: '',
         password: '',
         confirm: ''
@@ -38,6 +39,14 @@ const Register = () => {
 
     return (
             <form onSubmit={handleSubmit}>
+                 <input 
+                    value={credentials.username} 
+                    name='username' 
+                    placeholder='username' 
+                    type='text' 
+                    onChange={handleChange}
+                    required
+                />
                 <input 
                     value={credentials.email} 
                     name='email' 

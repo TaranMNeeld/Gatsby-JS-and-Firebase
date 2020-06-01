@@ -13,12 +13,19 @@ class Firebase {
     }
   }
 
-  async register({email, password}) {
-    return this.auth.createUserWithEmailAndPassword(email, password)
+  async getUserProfile({userId}) {
+    return this.db.collection('publicProfiles').where('userId', '==', userId).get()
+  }
+
+  async register({username, email, password}) {
+    const newUser = await this.auth.createUserWithEmailAndPassword(email, password)
+    return this.db.collection('publicProfiles').doc(username).set({
+      userId: newUser.user.uid
+    })
   }
 
   async login({email, password}) {
-    return this.auth.signInWithEmailAndPassword(email, password);
+    return this.auth.signInWithEmailAndPassword(email, password)
   }
 
   async logout() {
