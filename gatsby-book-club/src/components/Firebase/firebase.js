@@ -25,11 +25,18 @@ class Firebase {
   }
 
   async login({email, password}) {
+    localStorage.setItem('editing', false)
     return this.auth.signInWithEmailAndPassword(email, password)
   }
 
   async logout() {
     await this.auth.signOut();
+  }
+
+  subscribeToBookComments({bookId, onSnapShot}) {
+    const bookRef = this.db.collection('books').doc(bookId)
+    console.log(bookRef)
+    return this.db.collection('comments').where('book', '==', bookRef).onSnapShot(onSnapShot)
   }
 }
 
