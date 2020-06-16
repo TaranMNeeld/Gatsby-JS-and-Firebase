@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
 
@@ -33,20 +33,24 @@ const ContentWrapper = styled.div`
 `
 
 const BookItem = ({ authorName, bookSummary, bookTitle, bookCover, children }) => {
+
     return (
         <BookItemWrapper>
             <ImageWrapper>
-                <Img fixed={bookCover}/>
+                <Img fixed={bookCover} />
             </ImageWrapper>
             <ContentWrapper>
-                <h2>
-                    {bookTitle}<small>{authorName}</small>
-                </h2>
-                <p>
-                    {bookSummary}
-                </p>
+
                 <div>
-                    {children}
+                    <h2>
+                        {bookTitle}<small>{authorName}</small>
+                    </h2>
+                    <p>
+                        {bookSummary}
+                    </p>
+                    <div>
+                        {children}
+                    </div>
                 </div>
             </ContentWrapper>
         </BookItemWrapper >
